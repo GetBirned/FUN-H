@@ -2,4 +2,8 @@ Hi, I'm Anthony Santos.
 
 sup anthony im austin
 
+<<<<<<< HEAD
+Whats up Im Jason
+=======
 Hi, Anthony Santos. I'm Dartagnan Birnie, nice to meet you Anthony Santos.
+>>>>>>> e34f1df8abbea7acabd2cacc40ac46b13bccf189
