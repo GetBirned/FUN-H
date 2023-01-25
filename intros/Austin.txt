@@ -1,1 +1,9 @@
+<<<<<<< HEAD
 hey im austin
+=======
+hey im austin
+
+hey austin -anthony
+
+hi austin snow
+>>>>>>> e34f1df8abbea7acabd2cacc40ac46b13bccf189
