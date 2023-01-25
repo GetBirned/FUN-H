@@ -1,3 +1,3 @@
-# intos
+# intros
 
 Starter Intro Lab
