@@ -4,6 +4,8 @@ import logging
 
 import json
 
+from bson import json_util
+
 import azure.functions as func
 
 import data_manager
@@ -21,10 +23,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             req_body = req.params.get('query')
             req_body = json.loads(req_body)
             res = data_manager.read(req_body, False)
+            res = json_util.dumps(res)
             if not res:
                 return func.HttpResponse("No values found", status_code=400)
             else:
-                return func.HttpResponse(f"Query given is: {req_body}\nHere are the requested document(s): {res}", status_code=200)
+                return func.HttpResponse(res, status_code=200)
         except ValueError and TypeError:
             pass
         else:

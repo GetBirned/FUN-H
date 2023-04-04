@@ -105,6 +105,9 @@ def read(query, one=False):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
+    if query is None:
+        c = mycol.find()
+        return list(c)
     if one is True:
         return mycol.find_one(query)
     else:
