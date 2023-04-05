@@ -1,6 +1,6 @@
-import pymongo
 import sys
-import unittest
+import pymongo
+from pymongo.errors import ConnectionFailure
 import logging
 """
 This is a reST style.
@@ -25,32 +25,24 @@ Connect to the local MongoDB server, database, and collection.
 def initialize():
     # specify that we are using the global variable mycol
     global mycol
+    # connect to your local mongoDB server UDOYKIcm000bL8uF
+    # ssl=True
+    my_client = pymongo.MongoClient("mongodb+srv://AnthonySantos:UDOYKIcm000bL8uF@clustercs518.olluvi6.mongodb.net/?retryWrites=true&w=majority", serverSelectionTimeoutMS=12500)
 
-    #########################
-    # INSERT YOU CODE BELOW #
-    #########################
+    # check for a successful connection
+    try:
+        my_client.admin.command('ismaster')
+    except ConnectionFailure:
+        print("Server unavailable")
+        sys.exit(1)
+    # try:
+    #     my_client.server_info()
+    # except pymongo.errors.ServerSelectionTimeoutError as err:
+    #     print("Connection timed out, please check if your mongod is running!")
+    #     sys.exit(1)
 
-   # connect to your local mongoDB server
-# auth_str = "AnthonySantos:9V34IYo7pDZYKyoS"
-# conn_url = "clustercs518anthonysant.entwzds.mongodb.net/api"
-# conn_str = f"mongodb+srv://{auth_str}@{conn_url}"
-my_client = pymongo.MongoClient(
-    "mongodb+srv://AnthonySantos:9V34IYo7pDZYKyoS@clustercs518anthonysant.entwzds.mongodb.net/?retryWrites=true&w=majority", serverSelectionTimeoutMS=5000)
-
-# check for a successful connection
-try:
-    my_client.server_info()
-except pymongo.errors.ServerSelectionTimeoutError as err:
-    print("Connection timed out, please check if your mongod is running!")
-    sys.exit(1)
-
-# create a database named 'mydatabase'
-my_database = my_client["mydatabase"]
-
-# Note that a database doesn't get created until it gets content
-# create a collection named 'mycollection'
-# Note that a collection doesn't get created until it gets content
-mycol = my_database['mycollection']
+    mydata = my_client["mydatabase"]
+    mycol = mydata["mycollection"]
 
 """
 Drop the collection and reset global variable mycol to None.
@@ -86,16 +78,15 @@ def create(document):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-    x = 0
-    try:
-        x = mycol.insert_many(document)
-    except:
-        x = mycol.insert_one(document)
-    # Should probably wrap in try and catch statements instead
-    if x == 0:
-        return "False"
+    if isinstance(document, list):
+        result = mycol.insert_many(document)
     else:
-        return "True"
+        result = mycol.insert_one(document)
+    
+    if result.acknowledged:
+        return True
+    else:
+        return False
 
 
 """
@@ -114,8 +105,10 @@ def read(query, one=False):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-
-    if one == True:
+    if query is None:
+        c = mycol.find()
+        return list(c)
+    if one is True:
         return mycol.find_one(query)
     else:
         c = mycol.find(query)
@@ -136,12 +129,11 @@ def update(query, new_values):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-
     x = mycol.update_many(query, {'$set': new_values})
     if x == 0:
-        return "False"
+        return False
     else:
-        return "True"
+        return True
 
 
 """
@@ -157,12 +149,11 @@ def delete(query):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-
     x = mycol.delete_many(query)
     if x == 0:
-        return "False"
+        return False
     else:
-        return "True"
+        return True
 
 
 if __name__ == "__main__":
