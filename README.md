@@ -1,3 +1,7 @@
+Welcome to FUN-H, a place where you can create your plate and skip the line
+
+
+
 Open a new terminal:
 cd WebApp
 flask run --debug
