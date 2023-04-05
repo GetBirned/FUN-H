@@ -1,5 +1,8 @@
-# intros
+Open a new terminal:
+cd WebApp
+flask run --debug
 
-Starter Intro Lab
-
-1
+if the flask command doesn't work, try
+python3 -m pip install flask
+export FLASK_APP=app.py
+python3 -m flask run --debug
