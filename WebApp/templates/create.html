@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Record</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Create a New Record</h1>
+    <form action="{{ url_for('create') }}" method="POST">
+        <label for="field1">Food:</label>
+        <input type="text" id="field1" name="field1" required><br><br>
+        <label for="field2">Calories:</label>
+        <input type="text" id="field2" name="field2" required><br><br>
+        <label for="field3">Meal:</label>
+        <input type="text" id="field3" name="field3" required><br><br>
+        <input type="submit" value="Create Record">
+    </form>
+</body>
+</html>
