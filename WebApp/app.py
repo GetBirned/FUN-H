@@ -1,46 +1,36 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
+
 import requests
-import json
+
+from bson import json_util
 
 app = Flask(__name__)
 
-
-read_record_url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
-create_record_url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
-
-
-
-@app.route('/')
 @app.route('/index')
+@app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', url_create=url_for('create'), url_records=url_for('records'))
 
-@app.route('/ReadRecords/')
-def readRecords():
-    response = requests.get(read_record_url, params={"query": '{}'})
-    records = json.loads(response.text)
-    return render_template('records.html', records=records)
-
-@app.route('/CreateRecords', methods=['GET', 'POST'])
+@app.route('/create', methods=["GET", "POST"])
 def create():
-    if request.method == 'GET':
-        return render_template('create.html')
-    elif request.method == 'POST':
-        field1 = request.form['field1']
-        field2 = request.form['field2']
-        field3 = request.form['field3']
+    if request.method == "POST":
+        # could check for valid login here
+        # will need to change data below in the future
+        firstName = request.form.get("first name")
+        lastName = request.form.get("last name")
+        age = request.form.get("age")
+        doc = {"First Name": firstName, "Last Name": lastName, "Age": age}
+        requests.post('https://testfunctionappcs518.azurewebsites.net/api/createrecord', json=doc)
+        return redirect(url_for('records'), url_index=url_for('index'), url_create=url_for('create'))
+        # return render_template('create.html', url_index=url_index, url_records=url_records)
+    elif request.method == "GET":
+        return render_template('create.html', url_index=url_for('index'), url_records=url_for('records'))
 
-        response = requests.post(create_record_url, json={'food': field1, 'calories': field2, 'meal': field3})
-        if response.status_code == 200:
-            # Redirect to view all records
-            return redirect(url_for('view_all_records'))
-        else:
-            # Handle errors in creating the record
-            return "Error creating record. Please try again."
+@app.route('/records')
+def records():
+    response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
+    records = json_util.loads(response.text)
+    return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'))
 
-@app.route('/view_all_records')
-def view_all_records():
-    return redirect(url_for('readRecords'))
-
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

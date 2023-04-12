@@ -1,21 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Author: Anthony Santos -->
+<!-- Copied over style from records.html -->
+<!-- Asked ChatGPT to expand upon the styling to include the form section -->
+<!-- Swapped the color from green to blue to match the blue color of UNH -->
+<!doctype html>
+<html>
+  <head>
     <title>Create Record</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <h1>Create a New Record</h1>
-    <form action="{{ url_for('create') }}" method="POST">
-        <label for="field1">Food:</label>
-        <input type="text" id="field1" name="field1" required><br><br>
-        <label for="field2">Calories:</label>
-        <input type="text" id="field2" name="field2" required><br><br>
-        <label for="field3">Meal:</label>
-        <input type="text" id="field3" name="field3" required><br><br>
-        <input type="submit" value="Create Record">
+    <style>
+        body {
+          font-family: Arial, Helvetica, sans-serif;
+          background-color: #f1f1f1;
+        }
+        a {
+          color: #003591;
+          text-decoration: none;
+          font-weight: bold;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+        h1 {
+          margin-bottom: 0;
+          padding: 0.5em;
+          background-color: #003591;
+          color: #fff;
+          text-align: center;
+        }
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 1em;
+        }
+        form {
+          background-color: #fff;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+          margin-top: 1em;
+          padding: 1em;
+        }
+        input[type="text"], input[type="number"] {
+          width: 100%;
+          padding: 0.5em;
+          margin: 0.5em 0;
+          border: none;
+          border-radius: 3px;
+          box-shadow: 0 0 3px rgba(0,0,0,0.1);
+        }
+        input[type="submit"] {
+          background-color: #003591;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          padding: 0.5em;
+          margin-top: 1em;
+          cursor: pointer;
+        }
+        input[type="submit"]:hover {
+          background-color: #001D52;
+        }
+        nav {
+        background-color: #003591;
+        padding: 1.25em;
+        margin-left: 0;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav li {
+            margin: 0 0.5em;
+            padding-right: 5%;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+      </style>
+  </head>
+  <body>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Index</a></li>
+            <li><a href="{{ url_for('records') }}">View Records</a></li>
+            <li><a href="{{ url_for('create') }}">Create Record</a></li>
+        </ul>
+    </nav>
+    <h1>Create Record</h1>
+    <form method="post" action="{{url_for('create')}}">
+      <label for="name">First Name:</label>
+      <!-- Could remove required field -->
+      <input type="text" id="first name" name="first name" required><br>
+      <label for="last name">Last Name:</label>
+      <input type="text" id="last name" name="last name" required><br>
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required><br>
+      <input type="submit" value="Create">
     </form>
-</body>
+  </body>
 </html>
