@@ -21,7 +21,7 @@ def create():
         age = request.form.get("age")
         doc = {"First Name": firstName, "Last Name": lastName, "Age": age}
         requests.post('https://testfunctionappcs518.azurewebsites.net/api/createrecord', json=doc)
-        return redirect(url_for('records'), url_index=url_for('index'), url_create=url_for('create'))
+        return redirect(url_for('records'))
         # return render_template('create.html', url_index=url_index, url_records=url_records)
     elif request.method == "GET":
         return render_template('create.html', url_index=url_for('index'), url_records=url_for('records'))
