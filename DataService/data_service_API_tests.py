@@ -3,6 +3,8 @@
 
 # https://www.w3schools.com/python/module_requests.asp
 import requests
+import json
+from bson import ObjectId
 
 # url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
 # document = {'title': 'test'}     # or whatever your data fields are
@@ -85,7 +87,39 @@ document = [{"First Name": "Anthony", "Last Name": "Santos", "Age": 19},
 x = requests.post(url, json=document)
 print("response text", x.text)
 print("response code", x.status_code)
-url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
+# url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
+# x = requests.get(url, params={"query":'{}'})
+# print("response text", x.text)
+# print("response code", x.status_code)
+
+
+# url = 'http://localhost:7071/api/CreateRecord'
+# document = [{"First Name": "Anthony", "Last Name": "Santos", "Age": 19},
+#               {"First Name": "John", "Last Name": "Doe", "Age": 19},
+#               {"First Name": "Dr.", "Last Name": "Bob", "Age": 66},
+#               {"First Name": "Jane", "Last Name": "Doe", "Age": 20},
+#               ]
+# x = requests.post(url, json=document)
+# print("response text", x.text)
+# print("response code", x.status_code)
+url = 'http://localhost:7071/api/ReadRecords'
 x = requests.get(url, params={"query":'{}'})
 print("response text", x.text)
 print("response code", x.status_code)
+
+# # url = 'http://localhost:7071/api/UpdateRecord'
+# # x = requests.get(url, params={"query":'{"Age": 19}', "new_value":'{"Age": 101}'})
+# # print("response text", x.text)
+# # print("response code", x.status_code)
+
+url = 'http://localhost:7071/api/DeleteRecord'
+query = ObjectId('6442b5c669c41958d9d5f438')
+x = requests.get(url, params={'query': '{"_id": "'+str(query)+'"}'})
+print("response text", x.text)
+print("response code", x.status_code)
+
+url = 'http://localhost:7071/api/ReadRecords'
+x = requests.get(url, params={"query":'{}'})
+print("response text", x.text)
+print("response code", x.status_code)
+

@@ -82,6 +82,7 @@
       </ul>
     </nav>
     <div class="container">
+      {% if records %}
       <h1>Records</h1>
       <table>
         <thead>
@@ -89,6 +90,7 @@
             {% for field_name in records[0] if field_name != '_id' %}
               <th>{{ field_name }}</th>
             {% endfor %}
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -97,10 +99,19 @@
               {% for field_name, field_value in record.items() if field_name != '_id' %}
                 <td>{{ field_value }}</td>
               {% endfor %}
+              <td>
+                <form action="{{ url_for('records') }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this record?')">
+                  <input type="hidden" id="query" name="query" value="{{ record._id }}">
+                  <button type="submit">Delete</button>
+                </form>
+              </td>
             </tr>
           {% endfor %}
         </tbody>
       </table>
+      {% else %}
+      <h1>No records found</h1>
+      {% endif %}
     </div>
   </body>
 </html>

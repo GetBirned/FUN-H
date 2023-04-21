@@ -2,6 +2,7 @@ import sys
 import pymongo
 from pymongo.errors import ConnectionFailure
 import logging
+from bson import ObjectId
 """
 This is a reST style.
 
@@ -149,11 +150,28 @@ def delete(query):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-    x = mycol.delete_many(query)
-    if x == 0:
-        return False
-    else:
-        return True
+    # x = mycol.delete_many(query)
+    # if x == 0:
+    #     return False
+    # else:
+    #     return True
+    try: 
+        temp = query
+        temp = str(temp['_id'])
+        x = mycol.delete_many({"_id": ObjectId(temp)})
+        if x.deleted_count != 0:
+            return True
+    except:
+        pass
+    else: 
+        try:
+            x = mycol.delete_many(query)
+            if x.deleted_count == 0:
+                return False
+            else:
+                return True
+        except Exception as e:
+            return False
 
 
 if __name__ == "__main__":

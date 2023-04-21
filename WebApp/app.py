@@ -2,7 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect
 
 import requests
 
-from bson import json_util
+from bson import json_util, ObjectId
 
 app = Flask(__name__)
 
@@ -26,11 +26,19 @@ def create():
     elif request.method == "GET":
         return render_template('create.html', url_index=url_for('index'), url_records=url_for('records'))
 
-@app.route('/records')
+@app.route('/records', methods=["GET", "POST"])
 def records():
-    response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
-    records = json_util.loads(response.text)
-    return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'))
+    if request.method == "POST":
+        query = request.form.get("query")
+        #query = ObjectId(query)
+        response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/deleterecord", params={'query': '{"_id": "'+str(query)+'"}'})
+        response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
+        records = json_util.loads(response.text)
+        return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'))
+    else:
+        response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
+        records = json_util.loads(response.text)
+        return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'))
 
 if __name__ == "__main__":
     app.run(debug=True)

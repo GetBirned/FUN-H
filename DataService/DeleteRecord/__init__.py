@@ -14,12 +14,14 @@ import data_manager
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
-
+    data_manager.initialize()
     name = req.params.get('name')
     if not name:
         try:
             req_body = req.params.get('query')
+            # logging.info(f"CHECK1 {req_body}")
             req_body = json.loads(req_body)
+            # logging.info(f"CHECK2 {req_body}")
             res = data_manager.delete(req_body)
             if res is True:
                 return func.HttpResponse(f"Record(s) deleted successfully: {res}", status_code=200)
