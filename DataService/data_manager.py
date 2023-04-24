@@ -163,15 +163,15 @@ def delete(query):
             return True
     except:
         pass
-    else: 
-        try:
-            x = mycol.delete_many(query)
-            if x.deleted_count == 0:
-                return False
-            else:
-                return True
-        except Exception as e:
+    
+    try:
+        x = mycol.delete_many(query)
+        if x.deleted_count == 0:
             return False
+        else:
+            return True
+    except Exception as e:
+        return False
 
 
 if __name__ == "__main__":
