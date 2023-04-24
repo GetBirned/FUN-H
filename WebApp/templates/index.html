@@ -54,33 +54,70 @@
       }
       li:last-child {
         margin-bottom: 0;
+      } 
+      nav {
+      background-color: #003591;
+      color: #fff;
+      padding: 0.5em;
       }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        }
+
+        nav li {
+        margin: 0 1em;
+        }
+
+        nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+        }
+
+        nav a:hover {
+        text-decoration: underline;
+        }
     </style>
   </head>
   <body>
     <h1>Welcome!</h1>
+    <!-- Below is the Navigation Bar -->
+    <nav>
+        <ul>
+          <li><a href="{{ url_for('records') }}">View Records</a></li>
+          <li><a href="{{ url_for('create') }}">Create Record</a></li>
+        </ul>
+      </nav>
     <p>
       FUN-H (Food UNH) is a dining hall selection and Wildcat Plate creation service made by students, for students. Created by the collective minds of Austin Snow, Anthony Santos, Dartagnan Birnie and Jason MacMillan, the four creators of FUN-H set out to make a system designed to not only increase the efficiency of the dining hall system, but promote healthy eating habits in the campus community by way of the USDA approved, Wildcat Plate. The Wildcat Plate consists of 4 main dietary categories: Fruits, Whole Grains, Vegetables, and Lean Protein. With the FUNH system, you will be able to choose four (from a choice of Philbrook or Holloway Commons menu) items each, each one satisfying a specific food category. After creating your Wildcat Plate you will be prompted with a save option, allowing for the access of your past meals whenever hunger hits. Menus for both Philbrook and Holloway Commons will be updated daily, making sure you are always up-to-date with the newest UNH dining has to offer.
+    </p>
 
-      If there are any questions, concerns, or recommendations please access our “CONTACT” page for Emails to each of the individual developers.
+      <p>If there are any questions, concerns, or recommendations please access our “CONTACT” page for Emails to each of the individual developers.</p>
       
-      We hope you find a healthier self with FUN-H.
-      
+      <p>We hope you find a healthier self with FUN-H.
+    </p>
+    <p>
       PHILLY DINING HALL:
       29 McDaniel Drive, Durham, NH 03824
       Monday - Friday: 7:15AM - 9PM
       Saturday - Sunday: 9AM - 9PM
-      
+    </p>
+    <p>
       HOCO DINING HALL:
       75 Main St, Durham, NH 03824
-      
+    </p>  
       Hours: 
       Monday: Friday: 7:15AM - 9PM
       Saturday - Sunday: 8AM - 9PM
-    </p>
-    <ul>
+    <p>
+    <!-- <ul>
       <li><a href="{{ url_for('records') }}">View Records</a></li>
       <li><a href="{{ url_for('create') }}">Create Record</a></li>
-    </ul>
+    </ul> -->
   </body>
 </html>
