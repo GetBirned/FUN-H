@@ -3,6 +3,22 @@ from bs4 import BeautifulSoup
 import json
 
 
+create_url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
+delete_url = 'https://testfunctionappcs518.azurewebsites.net/api/deleterecord'
+read_url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
+
+def deleteMealItems():
+	response = requests.get(read_url, params={"query": '{"location": "hoco"}'})
+	print(response.text)
+	print(response)
+	response = requests.get(delete_url, params={"query": '{"location": "hoco"}'})
+	print(response.text)
+	print(response)
+	response = requests.get(delete_url, params={"query": '{"location": "philly"}'})
+	print(response.text)
+	print(response)	
+
+
 def getMealItems():
 	# Define the URLs for Holloway Commons and Philbrook Dining Hall
 	hoco = 'http://foodpro.unh.edu/shortmenu.asp?sName=%3Cbr+%2F%3E%3Ca+href%3D%22http%3A%2F%2Fwww%2Eunh%2Eedu%2Fdining%22%3E%3Ch2%3EUNH+Dining+%3C%2Fh2%3E%3C%2Fa%3E%3Cp%3E%3Ch2%3EMenus%3C%2Fh2%3E%3C%2Fp%3E&locationNum=80&locationName=Holloway+Commons&naFlag=1'
@@ -10,7 +26,6 @@ def getMealItems():
 	location_names = ['hoco', 'philly']
 	locations = [hoco, philly]
 	meals = ['Breakfast', 'Lunch', 'Dinner']
-
 	# Send a GET request to the URL and get the HTML content
 	for i, location in enumerate(locations):
 		response = requests.get(location)
@@ -29,7 +44,7 @@ def getMealItems():
 
 			# Create a list to store the menu items
 			items = []
-
+			item_list = []
 			# Loop through the tr elements and extract the menu item text
 			for row in menu_rows:
 				item_text = row.text.strip()
@@ -37,6 +52,10 @@ def getMealItems():
 			# Append the dictionary to the JSON file
 			for item in items:
 				item_dict = {'location': location_name, 'meal': meal, 'item': item}
-				requests.post('https://testfunctionappcs518.azurewebsites.net/api/createrecord', json=item_dict)
+				item_list.append(item_dict)
+			requests.post(create_url, json=item_list)
 				
-getMealItems()
+
+
+deleteMealItems()
+#getMealItems()
