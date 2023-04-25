@@ -70,23 +70,23 @@ from bson import ObjectId
 # print("response code", x.status_code)
 
 
-url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
-document = [{"First Name": "Anthony", "Last Name": "Santos", "Age": 19},
-              {"First Name": "John", "Last Name": "Doe", "Age": 19},
-              {"First Name": "Dr.", "Last Name": "Bob", "Age": 66},
-              {"First Name": "Jane", "Last Name": "Doe", "Age": 20},
-              {"First Name": "Scarlett", "Last Name": "Johansson", "Age": 38},
-              {"First Name": "Robert", "Last Name": "Downey Jr.", "Age": 58},
-              {"First Name": "Christian", "Last Name": "Bale", "Age": 49},
-              {"First Name": "Ryan", "Last Name": "Gosling", "Age": 42},
-              {"First Name": "Dr.", "Last Name": "Bob", "Age": 65},
-              {"First Name": "Mr.", "Last Name": "Clean", "Age": 65},
-              {"First Name": "Tom", "Last Name": "Brady", "Age": 45},
-              {"First Name": "James", "Last Name": "Dean", "Age": 67},
-              ]
-x = requests.post(url, json=document)
-print("response text", x.text)
-print("response code", x.status_code)
+# url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
+# document = [{"First Name": "Anthony", "Last Name": "Santos", "Age": 19},
+#               {"First Name": "John", "Last Name": "Doe", "Age": 19},
+#               {"First Name": "Dr.", "Last Name": "Bob", "Age": 66},
+#               {"First Name": "Jane", "Last Name": "Doe", "Age": 20},
+#               {"First Name": "Scarlett", "Last Name": "Johansson", "Age": 38},
+#               {"First Name": "Robert", "Last Name": "Downey Jr.", "Age": 58},
+#               {"First Name": "Christian", "Last Name": "Bale", "Age": 49},
+#               {"First Name": "Ryan", "Last Name": "Gosling", "Age": 42},
+#               {"First Name": "Dr.", "Last Name": "Bob", "Age": 65},
+#               {"First Name": "Mr.", "Last Name": "Clean", "Age": 65},
+#               {"First Name": "Tom", "Last Name": "Brady", "Age": 45},
+#               {"First Name": "James", "Last Name": "Dean", "Age": 67},
+#               ]
+# x = requests.post(url, json=document)
+# print("response text", x.text)
+# print("response code", x.status_code)
 # url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
 # x = requests.get(url, params={"query":'{}'})
 # print("response text", x.text)
@@ -102,23 +102,28 @@ print("response code", x.status_code)
 # x = requests.post(url, json=document)
 # print("response text", x.text)
 # print("response code", x.status_code)
-url = 'http://localhost:7071/api/ReadRecords'
-x = requests.get(url, params={"query":'{}'})
+# url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
+# x = requests.get(url, params={"query":'{}'})
+# print("response text", x.text)
+# print("response code", x.status_code)
+
+url = 'http://localhost:7071/api/UpdateRecord'
+query = ObjectId('6442d8bf099b9873f2919a83')
+firstName = "John"
+lastName = "Doe"
+age = 20
+doc = json.dumps({"First Name": firstName, "Last Name": lastName, "Age": age})
+x = requests.post(url, params={'query': '{"_id": "'+str(query)+'"}', "new_value": doc})
 print("response text", x.text)
 print("response code", x.status_code)
 
-# # url = 'http://localhost:7071/api/UpdateRecord'
-# # x = requests.get(url, params={"query":'{"Age": 19}', "new_value":'{"Age": 101}'})
-# # print("response text", x.text)
-# # print("response code", x.status_code)
+# url = 'https://testfunctionappcs518.azurewebsites.net/api/deleterecord'
+# query = ObjectId('6442b5c669c41958d9d5f438')
+# x = requests.get(url, params={'query': '{"_id": "'+str(query)+'"}'})
+# print("response text", x.text)
+# print("response code", x.status_code)
 
-url = 'http://localhost:7071/api/DeleteRecord'
-query = ObjectId('6442b5c669c41958d9d5f438')
-x = requests.get(url, params={'query': '{"_id": "'+str(query)+'"}'})
-print("response text", x.text)
-print("response code", x.status_code)
-
-url = 'http://localhost:7071/api/ReadRecords'
+url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecord'
 x = requests.get(url, params={"query":'{}'})
 print("response text", x.text)
 print("response code", x.status_code)
