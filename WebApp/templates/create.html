@@ -84,11 +84,12 @@
   </head>
   <body>
     <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Index</a></li>
-            <li><a href="{{ url_for('records') }}">View Records</a></li>
-            <li><a href="{{ url_for('create') }}">Create Record</a></li>
-        </ul>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Index</a></li>
+        <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
+        <li><a href="{{ url_for('records') }}">View Records</a></li>
+        <li><a href="{{ url_for('create') }}">Create Record</a></li>
+      </ul>
     </nav>
     <h1>Create Record</h1>
     <form method="post" action="{{url_for('create')}}">
