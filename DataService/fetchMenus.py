@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+from datetime import datetime
+
 
 
 create_url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
@@ -20,6 +22,9 @@ def deleteMealItems():
 
 
 def getMealItems():
+	# Get the time
+	current_time = datetime.now()
+
 	# Define the URLs for Holloway Commons and Philbrook Dining Hall
 	hoco = 'http://foodpro.unh.edu/shortmenu.asp?sName=%3Cbr+%2F%3E%3Ca+href%3D%22http%3A%2F%2Fwww%2Eunh%2Eedu%2Fdining%22%3E%3Ch2%3EUNH+Dining+%3C%2Fh2%3E%3C%2Fa%3E%3Cp%3E%3Ch2%3EMenus%3C%2Fh2%3E%3C%2Fp%3E&locationNum=80&locationName=Holloway+Commons&naFlag=1'
 	philly = 'http://foodpro.unh.edu/shortmenu.asp?sName=University%20Of%20New%20Hampshire%20Hospitality%20Services&locationNum=30&locationName=Philbrook%20Dining%20Hall&naFlag=1'
@@ -51,7 +56,7 @@ def getMealItems():
 				items.append(item_text)
 			# Append the dictionary to the JSON file
 			for item in items:
-				item_dict = {'location': location_name, 'meal': meal, 'item': item}
+				item_dict = {'location': location_name, 'meal': meal, 'item': item, 'date': ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))}
 				item_list.append(item_dict)
 			requests.post(create_url, json=item_list)
 				
