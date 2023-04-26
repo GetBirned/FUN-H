@@ -9,14 +9,14 @@ read_url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecords'
 
 def deleteMealItems():
 	response = requests.get(read_url, params={"query": '{"location": "hoco"}'})
-	print(response.text)
-	print(response)
+	#print(response.text)
+	#print(response)
 	response = requests.get(delete_url, params={"query": '{"location": "hoco"}'})
-	print(response.text)
-	print(response)
+	#print(response.text)
+	#print(response)
 	response = requests.get(delete_url, params={"query": '{"location": "philly"}'})
-	print(response.text)
-	print(response)	
+	#print(response.text)
+	#print(response)	
 
 
 def getMealItems():
@@ -58,4 +58,4 @@ def getMealItems():
 
 
 deleteMealItems()
-#getMealItems()
+getMealItems()
