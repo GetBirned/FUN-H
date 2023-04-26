@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, send_file
 
 import requests
 
@@ -7,6 +7,10 @@ import json
 from bson import json_util, ObjectId
 
 app = Flask(__name__)
+
+@app.route('/image')
+def serve_images():
+    return send_file('./logoFUNH.png', mimetype='image/png')
 
 @app.route('/index')
 @app.route('/')
