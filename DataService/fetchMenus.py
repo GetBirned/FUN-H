@@ -56,11 +56,11 @@ def getMealItems():
 				items.append(item_text)
 			# Append the dictionary to the JSON file
 			for item in items:
-				item_dict = {'location': location_name, 'meal': meal, 'item': item, 'date': ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))}
+				item_dict = {'location': location_name, 'meal': meal, 'item': item, 'date': ("%s-%s-%s" % (current_time.month, current_time.day - 1, current_time.year))}
 				item_list.append(item_dict)
 			requests.post(create_url, json=item_list)
 				
 
 
-deleteMealItems()
+#deleteMealItems()
 getMealItems()
