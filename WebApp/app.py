@@ -105,8 +105,7 @@ def date():
 
         return render_template("date.html", records=sorted_records)
     else:
-        return render_template("date.html")
-
+        return render_template("date.html", records={"philly": defaultdict(list), "hoco": defaultdict(list)})
 
 
 if __name__ == "__main__":
