@@ -3,7 +3,8 @@ from flask import Flask, render_template, url_for, request, redirect, send_file
 import requests
 from datetime import datetime
 import json
-
+from collections import defaultdict
+from datetime import datetime
 from bson import json_util, ObjectId
 
 app = Flask(__name__)
@@ -77,6 +78,31 @@ def records():
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
         records = json_util.loads(response.text)
         return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'), url_phillyMenu=url_for('phillyMenu'))
+
+
+@app.route('/date', methods=["GET", "POST"])
+def date():
+    if request.method == "POST":
+        selected_date = request.form.get("date")
+        parsed_date = datetime.strptime(selected_date, "%Y-%m-%d")
+        formatted_date = parsed_date.strftime("%-m-%-d-%Y") # Updated line
+        
+        response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"date": "'+formatted_date+'"}'})
+        records = json_util.loads(response.text)
+
+        sorted_records = {"philly": defaultdict(list), "hoco": defaultdict(list)}
+
+        for record in records:
+            if record["location"] == "philly":
+                sorted_records["philly"][record["meal"]].append(record)
+            elif record["location"] == "hoco":
+                sorted_records["hoco"][record["meal"]].append(record)
+
+        return render_template("date.html", records=sorted_records)
+    else:
+        return render_template("date.html")
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

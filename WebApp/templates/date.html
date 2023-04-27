@@ -1,0 +1,161 @@
+<!--Author Austin Snow-->
+<!-- used GPT-4 to help set this entire page up -->
+<!doctype html>
+<html>
+  <head>
+    <title>Date Selection</title>
+    <link rel="icon" href="/image" type="image/x-icon">
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f1f1f1;
+      }
+      a {
+        color: #003591;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      h1 {
+        margin-bottom: 0;
+        padding: 0.5em;
+        background-color: #003591;
+        color: #fff;
+        text-align: center;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1em;
+      }
+      form {
+        background-color: #fff;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        margin-top: 1em;
+        padding: 1em;
+      }
+      input[type="text"], input[type="number"] {
+        width: 100%;
+        padding: 0.5em;
+        margin: 0.5em 0;
+        border: none;
+        border-radius: 3px;
+        box-shadow: 0 0 3px rgba(0,0,0,0.1);
+      }
+      input[type="submit"] {
+        background-color: #003591;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 0.5em;
+        margin-top: 1em;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: #001D52;
+      }
+      nav {
+      background-color: #003591;
+      padding: 1.25em;
+      margin-left: 0;
+      }
+      nav ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+      }
+      nav li {
+          margin: 0 0.5em;
+          padding-right: 5%;
+      }
+      nav a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: bold;
+      }
+      nav a:hover {
+          text-decoration: underline;
+      }
+      .menu-container {
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+      }
+      .menu-column {
+          width: 45%;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: #fff;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        margin: 1em 0;
+      }
+      th, td {
+        text-align: left;
+        padding: 0.5em;
+      }
+      th {
+        background-color: #003591;
+        color: #fff;
+        font-weight: bold;
+      }
+      tr:nth-child(even) {background-color: #f2f2f2;}
+      td {
+        text-align: left;
+        padding: 0.5em;
+        vertical-align: top; /* Add this property to align the content to the top */
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Index</a></li>
+        <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
+        <li><a href="{{ url_for('hocoMenu') }}">Holloway Commons Menu</a></li>
+        <li><a href="{{ url_for('records') }}">View Records</a></li>
+        <li><a href="{{ url_for('create') }}">Create Record</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        <li><a href="{{ url_for('date') }}">Select Date</a></li>
+      </ul>
+    </nav>
+    <h1>Select a Date</h1>
+    <form action="{{ url_for('date') }}" method="POST">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required>
+      <input type="submit" value="Submit">
+    </form>
+    <table>
+      <thead>
+        <tr>
+          <th>Hoco</th>
+          <th>Philly</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for meal in ['Breakfast', 'Lunch', 'Dinner'] %}
+        <tr>
+          {% for location in ['hoco', 'philly'] %}
+          <td>
+            <h2>{{ meal }}</h2>
+            <table>
+              {% for record in records[location][meal] %}
+              <tr>
+                <td>
+                  {{ record["item"] }}
+                </td>
+              </tr>
+              {% endfor %}
+            </table>
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
