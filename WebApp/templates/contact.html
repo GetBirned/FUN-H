@@ -10,7 +10,7 @@
     <title>Contact Us</title>
     <link rel="icon" href="/image" type="image/x-icon">
     <style>
-      p {
+p {
         text-align: center;
         color: #003591;
       
@@ -18,6 +18,7 @@
       body {
         font-family: Arial, Helvetica, sans-serif;
         background-color: #f1f1f1;
+        margin: 0;
       }
       a {
         color: #003591;
@@ -28,7 +29,9 @@
         text-decoration: underline;
       }
       h1 {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         margin-bottom: 0;
+        margin-top: 1%;
         padding: 0.5em;
         background-color: #003591;
         color: #fff;
@@ -39,44 +42,93 @@
         margin: 0 auto;
         padding: 1em;
       }
-      nav {
-        background-color: #003591;
-        padding: 1.25em;
-        margin-left: 0;
+      .top-nav, .bottom-nav {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      .top-nav {
+      background-color: #003591;
+      padding: 0.5em;
+      margin-left: 0;
+      }
+      .bottom-nav {
+          background-color: #eee;
+          margin-left: 0;
       }
       nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          align-items: center;
       }
       nav li {
-        margin: 0 0.5em;
-        padding-right: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-      nav a {
-        color: #fff;
+      .bottom-nav li {
+        padding: 1em;
+        background-color: #eee;
+        transition: background-color 0.5s ease-in-out;
+        padding-right: 2%;
+        padding-left: 2%;
+      }
+      .top-nav li {
+          margin: 0 1em;
+          padding-left: 5%;
+      }
+      .top-nav a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: bold;
+      }
+      .bottom-nav a {
+        color: #444;
         text-decoration: none;
         font-weight: bold;
+        transition: all 0.3s ease;
+    }
+      .top-nav a:hover {
+          text-decoration: underline;
       }
-      nav a:hover {
-        text-decoration: underline;
-      }
+      .bottom-nav a:hover {
+        color: #003591;
+        background-color: #fff;
+    }
+        .bottom-nav li:hover {
+      background-color: #fff;
+    }
+
+    .bottom-nav li a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .bottom-nav li a:hover {
+      color: #003591;
+      text-decoration: underline;
+    }
     </style>
   </head>
   <body>
     <!-- Below is the Navigation Bar -->
-    <nav>
+    <nav class="top-nav">
       <ul>
-        <li><a href="{{ url_for('index') }}"><img src="/image" style="width:50px;height:50px;"></a></li>
-        <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
-        <li><a href="{{ url_for('hocoMenu') }}">Holloway Commons Menu</a></li>
-        <li><a href="{{ url_for('records') }}">View Records</a></li>
-        <li><a href="{{ url_for('date') }}">Select Date</a></li>
-        <li><a href="{{ url_for('create') }}">Create Record</a></li>
-        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+        <li style="margin-right: auto; padding-right: 5%; padding-left: 0%"><a href="{{ url_for('index') }}"><img src="/image" style="width:50px;height:50px;"></a></li>
+        <li><a href="dashboard.html">Account</a></li>
       </ul>
-    </nav>
+  </nav>
+  <nav class="bottom-nav">
+      <ul>
+          <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
+          <li><a href="{{ url_for('hocoMenu') }}">Holloway Commons Menu</a></li>
+          <li><a href="{{ url_for('records') }}">View Records</a></li>
+          <li><a href="{{ url_for('date') }}">Select Date</a></li>
+          <li><a href="{{ url_for('create') }}">Create Record</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+      </ul>
+  </nav>
     <h1>Contact Us:</h1>
 
       <p>Feel free to contact any of the developers below with comments, questions or concerns.</p>
