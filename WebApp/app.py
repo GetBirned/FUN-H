@@ -34,6 +34,11 @@ def hocoMenu():
     records = json_util.loads(response.text)
     return render_template('hocoMenu.html', records=records, url_index=url_for('index'), url_records=url_for('records'), url_create=url_for('create'), url_phillyMenu=url_for('phillyMenu'))
 
+@app.route('/contact', methods=["GET"])
+def contact():
+    return render_template('contact.html')
+   
+
 @app.route('/create', methods=["GET", "POST"])
 def create():
     if request.method == "POST":
