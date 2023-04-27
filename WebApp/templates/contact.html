@@ -1,1 +1,92 @@
+<!-- Author: Anthony Santos -->
+<!-- Copied over style from records.html -->
+<!-- Asked ChatGPT to expand upon styling to include the list items / URLs  by including my written html -->
+<!-- Also swapped the color from green to blue to match the blue color of UNH -->
+<!-- Not including the navigation bar I used in other html to go along with assignment -->
+<!-- I will update / include navigation bar later when something actually goes on this page -->
+<!doctype html>
+<html>
+  <head>
+    <title>Welcome!</title>
+    <link rel="icon" href="/image" type="image/x-icon">
+    <style>
+      p {
+        text-align: center;
+        color: #003591;
+      
+      }
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f1f1f1;
+      }
+      a {
+        color: #003591;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      h1 {
+        margin-bottom: 0;
+        padding: 0.5em;
+        background-color: #003591;
+        color: #fff;
+        text-align: center;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1em;
+      }
+      nav {
+        background-color: #003591;
+        padding: 1.25em;
+        margin-left: 0;
+      }
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+      }
+      nav li {
+        margin: 0 0.5em;
+        padding-right: 5%;
+      }
+      nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Below is the Navigation Bar -->
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
+        <li><a href="{{ url_for('hocoMenu') }}">Holloway Commons Menu</a></li>
+        <li><a href="{{ url_for('records') }}">View Records</a></li>
+        <li><a href="{{ url_for('create') }}">Create Record</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+      </ul>
+    </nav>
+    <h1>Contact Us:</h1>
 
+      <p>Feel free to contact any of the developers below with comments, questions or concerns.</p>
+      <centre>
+      <a href = "mailto: Anthony.Santos@unh.edu">Anthony Santos</a>
+      <a href = "mailto: dsb1041@usnh.edu">Austin Snow</a>
+      <a href = "mailto: Austin.Snow@unh.edu">Dart Birnie</a>
+      <a href = "mailto: Jason.MacMillan@unh.edu">Jason MacMillan</a>
+      </centre>
+      <p>Thank you!</p>
+      
+      
+  </body>
+</html>
