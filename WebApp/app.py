@@ -13,6 +13,10 @@ app = Flask(__name__)
 def serve_images():
     return send_file('./logoFUNH.png', mimetype='image/png')
 
+@app.route('/css')
+def serve_css():
+    return send_file('./styles.css', mimetype='text/css')
+
 @app.route('/index')
 @app.route('/')
 def index():
