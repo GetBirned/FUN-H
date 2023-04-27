@@ -90,8 +90,8 @@ def date():
     if request.method == "POST":
         selected_date = request.form.get("date")
         parsed_date = datetime.strptime(selected_date, "%Y-%m-%d")
-        formatted_date = parsed_date.strftime("%-m-%-d-%Y") # Updated line
-        
+        formatted_date = f"{parsed_date.month}-{parsed_date.day}-{parsed_date.year}"  # Updated line
+        print(formatted_date)
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"date": "'+formatted_date+'"}'})
         records = json_util.loads(response.text)
 
@@ -106,6 +106,7 @@ def date():
         return render_template("date.html", records=sorted_records)
     else:
         return render_template("date.html", records={"philly": defaultdict(list), "hoco": defaultdict(list)})
+
 
 
 if __name__ == "__main__":
