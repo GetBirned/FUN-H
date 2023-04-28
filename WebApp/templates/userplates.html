@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="icon" href="/image" type="image/x-icon">
+    <link rel="stylesheet" href="/css">
+    <link rel="stylesheet" href="/normalizecss">
+    <link rel="stylesheet" href="/accountcss">
+  </head>
+  <body>
+    {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %}
+    <div class="card-wrapper">
+
+      <div class="card">
+  
+        <h1 class="center">Dashboard</h1>
+        <p class="center">You are currently logged in.</p>
+  
+        <div class="center">
+          <a href="/user/signout" class="btn btn--secondary">Sign Out</a>
+        </div>
+        <div class="center">
+          <a href="/user/removeAccount" class="btn btn--secondary" onclick="return confirm('Are you sure you want to delete your account?')">Remove Account</a>
+        </div>
+      
+      </div>
+  
+      <div class="card">
+  
+        <h1 class="center">Your Info</h1>
+  
+        <p>
+          <strong>ID:</strong> {{ session['user']['_id'] }}<br>
+          <strong>Name:</strong> {{ session['user']['name'] }}<br>
+          <strong>Email:</strong> {{ session['user']['email'] }}
+        </p>
+      
+      </div>
+    
+    </div>
+  </body>
+</html>

@@ -107,15 +107,22 @@ from bson import ObjectId
 # print("response text", x.text)
 # print("response code", x.status_code)
 
-url = 'http://localhost:7071/api/UpdateRecord'
-query = ObjectId('6442d8bf099b9873f2919a83')
-firstName = "John"
-lastName = "Doe"
-age = 20
-doc = json.dumps({"First Name": firstName, "Last Name": lastName, "Age": age})
-x = requests.post(url, params={'query': '{"_id": "'+str(query)+'"}', "new_value": doc})
-print("response text", x.text)
-print("response code", x.status_code)
+# url = 'http://localhost:7071/api/UpdateRecord'
+# query = ObjectId('6442d8bf099b9873f2919a83')
+# firstName = "John"
+# lastName = "Doe"
+# age = 20
+# doc = json.dumps({"First Name": firstName, "Last Name": lastName, "Age": age})
+# x = requests.post(url, params={'query': '{"_id": "'+str(query)+'"}', "new_value": doc})
+# print("response text", x.text)
+# print("response code", x.status_code)
+
+# url = 'http://localhost:7071/api/UpdateRecord'
+# email = "test2@email.com"
+# email2 = json.dumps({"email": "testupp@email.com"})
+# x = requests.get(url, params={'query': '{"email": "'+email+'"}', "new_value": email2})
+# print("response text", x.text)
+# print("response code", x.status_code)
 
 # url = 'https://testfunctionappcs518.azurewebsites.net/api/deleterecord'
 # query = ObjectId('6442b5c669c41958d9d5f438')
@@ -123,8 +130,9 @@ print("response code", x.status_code)
 # print("response text", x.text)
 # print("response code", x.status_code)
 
-url = 'https://testfunctionappcs518.azurewebsites.net/api/readrecord'
-x = requests.get(url, params={"query":'{}'})
+url = 'http://localhost:7071/api/ReadRecords'
+email = "test2@email.com"
+x = requests.get(url, params={"query":'{}', "one": True})
 print("response text", x.text)
 print("response code", x.status_code)
 

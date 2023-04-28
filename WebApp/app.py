@@ -1,5 +1,5 @@
-from flask import Flask, render_template, url_for, request, redirect, send_file
-
+from flask import Flask, render_template, url_for, request, redirect, send_file, session
+from functools import wraps
 import requests
 from datetime import datetime
 import json
@@ -7,7 +7,46 @@ from collections import defaultdict
 from datetime import datetime
 from bson import json_util, ObjectId
 
+from user.models import User
+
 app = Flask(__name__)
+# Random secret key I made
+app.secret_key = b'?J o\xaem\xa2\xb7\xdc\x996(\xaa\x97\xb4\x12'
+
+# Decorators. Checks if someone is logged in
+def login_required(f):
+    @wraps(f)
+    def wrap(*arg, **kwargs):
+        if 'logged_in' in session:
+            return f(*arg, **kwargs)
+        else:
+            return redirect('/createAccount')
+    return wrap
+
+def signedout_required(f):
+    @wraps(f)
+    def wrap(*arg, **kwargs):
+        if 'logged_in' in session:
+            return redirect('/userplates')
+        else:
+            return f(*arg, **kwargs)
+    return wrap
+
+@app.route('/user/signup', methods=['POST'])
+def signup():
+    return User().signup()
+
+@app.route('/user/signout')
+def signout():
+    return User().signout()
+
+@app.route('/user/login', methods=['POST'])
+def login():
+    return User().login()
+
+@app.route('/user/removeAccount')
+def removeAccount():
+    return User().delete()
 
 @app.route('/image')
 def serve_images():
@@ -17,10 +56,36 @@ def serve_images():
 def serve_css():
     return send_file('./styles.css', mimetype='text/css')
 
+@app.route('/normalizecss')
+def serve_normalizecss():
+    return send_file('./normalize.css', mimetype='text/css')
+
+@app.route('/accountcss')
+def serve_accountcss():
+    return send_file('./AccountStyles.css', mimetype='text/css')
+
+@app.route('/jquery')
+def serve_jquery():
+    return send_file('./js/jquery.js', mimetype='text/js')
+
+@app.route('/scripts')
+def serve_scripts():
+    return send_file('./js/scripts.js', mimetype='text/js')
+
 @app.route('/index')
 @app.route('/')
 def index():
-    return render_template('index.html', url_create=url_for('create'), url_records=url_for('records'))
+    return render_template('index.html')
+
+@app.route('/createAccount')
+@signedout_required
+def createAccount():
+    return render_template('createAccount.html')
+
+@app.route('/userplates')
+@login_required
+def dashboard():
+    return render_template('userplates.html')
 
 @app.route('/phillymenu', methods=["GET"])
 def phillyMenu():
@@ -28,7 +93,7 @@ def phillyMenu():
     date = ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))
     response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"location": "philly", "date": "'+date+'"}'})
     records = json_util.loads(response.text)
-    return render_template('phillyMenu.html', records=records, url_index=url_for('index'), url_records=url_for('records'), url_create=url_for('create'), url_hocoMenu=url_for('hocoMenu'))
+    return render_template('phillyMenu.html', records=records)
 
 @app.route('/hocomenu', methods=["GET"])
 def hocoMenu():
@@ -36,7 +101,7 @@ def hocoMenu():
     date = ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))
     response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"location": "hoco", "date": "'+date+'"}'})
     records = json_util.loads(response.text)
-    return render_template('hocoMenu.html', records=records, url_index=url_for('index'), url_records=url_for('records'), url_create=url_for('create'), url_phillyMenu=url_for('phillyMenu'))
+    return render_template('hocoMenu.html', records=records)
 
 @app.route('/contact', methods=["GET"])
 def contact():
@@ -56,7 +121,7 @@ def create():
         return redirect(url_for('records'))
         # return render_template('create.html', url_index=url_index, url_records=url_records)
     elif request.method == "GET":
-        return render_template('create.html', url_index=url_for('index'), url_records=url_for('records'), url_phillyMenu=url_for('phillyMenu'))
+        return render_template('create.html')
 
 @app.route('/edit', methods=["GET", "POST"])
 def edit():
@@ -72,7 +137,7 @@ def edit():
         query = request.args.get("query")
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={'query': '{"_id": "'+str(query)+'"}'})
         record = json_util.loads(response.text)
-        return render_template('edit.html', record=record, url_index=url_for('index'), url_records=url_for('records'), url_phillyMenu=url_for('phillyMenu'))
+        return render_template('edit.html', record=record)
 
 @app.route('/records', methods=["GET", "POST"])
 def records():
@@ -82,11 +147,11 @@ def records():
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/deleterecord", params={'query': '{"_id": "'+str(query)+'"}'})
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
         records = json_util.loads(response.text)
-        return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'), url_phillyMenu=url_for('phillyMenu'))
+        return render_template("records.html", records=records)
     else:
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{}'})
         records = json_util.loads(response.text)
-        return render_template("records.html", records=records, url_index=url_for('index'), url_create=url_for('create'), url_phillyMenu=url_for('phillyMenu'))
+        return render_template("records.html", records=records)
 
 
 @app.route('/date', methods=["GET", "POST"])

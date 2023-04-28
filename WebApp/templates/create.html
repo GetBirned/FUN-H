@@ -40,22 +40,9 @@
       </style>
   </head>
   <body>
-    <nav class="top-nav">
-      <ul>
-        <li style="margin-right: auto; padding-right: 5%; padding-left: 0%"><a href="{{ url_for('index') }}"><img src="/image" style="width:50px;height:50px;"></a></li>
-        <li><a href="dashboard.html">Account</a></li>
-      </ul>
-  </nav>
-  <nav class="bottom-nav">
-      <ul>
-          <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
-          <li><a href="{{ url_for('hocoMenu') }}">Holloway Commons Menu</a></li>
-          <li><a href="{{ url_for('records') }}">View Records</a></li>
-          <li><a href="{{ url_for('date') }}">Select Date</a></li>
-          <li><a href="{{ url_for('create') }}">Create Record</a></li>
-          <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-      </ul>
-  </nav>
+    {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %}
     <h1>Create Record</h1>
     <form method="post" action="{{url_for('create')}}">
       <label for="name">First Name:</label>

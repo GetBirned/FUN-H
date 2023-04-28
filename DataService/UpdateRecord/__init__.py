@@ -18,17 +18,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     if not name:
         try:
             req_body = req.params.get('query')
-            logging.info(f"CHECK1 {req_body}")
+            # logging.info(f"CHECK1 {req_body}")
             req_body = json.loads(req_body)
-            logging.info(f"CHECK2 {req_body}")
+            # logging.info(f"CHECK2 {req_body}")
             req_body2 = req.params.get('new_value')
-            logging.info(f"CHECK3 {req_body2}")
-            print("AAAA")
+            # logging.info(f"CHECK3 {req_body2}")
+            # print("AAAA")
             req_body2 = json.loads(req_body2)
-            print("BBBB")
-            logging.info(f"CHECK4 {req_body2}")
+            # print("BBBB")
+            # logging.info(f"CHECK4 {req_body2}")
             res = data_manager.update(req_body, req_body2)
-            logging.info(f"CHECK5 {res}")
+            # logging.info(f"CHECK5 {res}")
             if not res:
                 return func.HttpResponse("Failed to Update Record", status_code=400)
             else:

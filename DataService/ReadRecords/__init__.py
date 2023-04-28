@@ -22,12 +22,18 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         try:
             req_body = req.params.get('query')
             req_body = json.loads(req_body)
-            res = data_manager.read(req_body, False)
-            res = json_util.dumps(res)
-            if not res:
-                return func.HttpResponse("No values found", status_code=400)
+            # logging.info(req_body)
+            if req.params.get('one') == "True":
+                res = data_manager.read(req_body, True)
             else:
+                res = data_manager.read(req_body, False)
+            # logging.info(res)
+            if res:
+                res = json_util.dumps(res)
+                # logging.info(res)
                 return func.HttpResponse(res, status_code=200)
+            else:
+                return func.HttpResponse("No values found", status_code=400)
         except ValueError and TypeError:
             pass
         else:

@@ -7,28 +7,15 @@
 <!doctype html>
 <html>
   <head>
-    <title>Welcome!</title>
+    <title>FUN-H</title>
     <link rel="icon" href="/image" type="image/x-icon">
     <link rel="stylesheet" href="/css">
   </head>
   <body>
     <!-- Below is the Navigation Bar -->
-    <nav class="top-nav">
-      <ul>
-        <li style="margin-right: auto; padding-right: 5%; padding-left: 0%"><a href="{{ url_for('index') }}"><img src="/image" style="width:50px;height:50px;"></a></li>
-        <li><a href="dashboard.html">Account</a></li>
-      </ul>
-  </nav>
-  <nav class="bottom-nav">
-      <ul>
-          <li><a href="{{ url_for('phillyMenu') }}">Philbrook Menu</a></li>
-          <li><a href="{{ url_for('hocoMenu') }}">Holloway Commons Menu</a></li>
-          <li><a href="{{ url_for('records') }}">View Records</a></li>
-          <li><a href="{{ url_for('date') }}">Select Date</a></li>
-          <li><a href="{{ url_for('create') }}">Create Record</a></li>
-          <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
-      </ul>
-  </nav>
+    {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %}
     <h1>Welcome!</h1>
     <p>
       <i>FUN-H</i> (Food UNH) is a dining hall selection and Wildcat Plate creation service made by students, for students. Created by the collective minds of Austin Snow, Anthony Santos, Dartagnan Birnie and Jason MacMillan, the four creators of <i>FUN-H</i> set out to make a system designed to not only increase the efficiency of the dining hall system, but promote healthy eating habits in the campus community by way of the USDA approved, Wildcat Plate. The Wildcat Plate consists of 4 main dietary categories: Fruits, Whole Grains, Vegetables, and Lean Protein. With the <i>FUN-H</i> system, you will be able to choose four (from a choice of Philbrook or Holloway Commons menu) items each, each one satisfying a specific food category. After creating your Wildcat Plate you will be prompted with a save option, allowing for the access of your past meals whenever hunger hits. Menus for both Philbrook and Holloway Commons will be updated daily, making sure you are always up-to-date with the newest UNH dining has to offer.
@@ -50,5 +37,6 @@
       Monday: Friday: 7:15AM - 9PM
       Saturday - Sunday: 8AM - 9PM
     </p> 
+  
   </body>
 </html>

@@ -116,7 +116,7 @@ def read(query, one=False):
             temp = query
             temp = str(temp['_id'])
             x = mycol.find_one({"_id": ObjectId(temp)})
-            if x != None:
+            if x:
                 return x
         except:
             pass
@@ -138,19 +138,20 @@ def update(query, new_values):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-    try: 
+    try:
         temp = query
         temp = str(temp['_id'])
         x = mycol.update_many({"_id": ObjectId(temp)}, {'$set': new_values})
-        if x != 0:
+        print("AAA", x)
+        if x .modified_count > 0:
             return True
     except:
         pass
     x = mycol.update_many(query, {'$set': new_values})
-    if x == 0:
-        return False
-    else:
+    if x.modified_count > 0:
         return True
+    else:
+        return False
 
 
 """
