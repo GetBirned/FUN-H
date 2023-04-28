@@ -53,7 +53,7 @@ nav li {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease;
     transition: opacity 0.5s ease-in-out;
     display: inline-block;
 }

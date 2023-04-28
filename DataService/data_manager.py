@@ -106,6 +106,8 @@ def read(query, one=False):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
+    print(query)
+    print(one)
     if query is None:
         c = mycol.find()
         return list(c)

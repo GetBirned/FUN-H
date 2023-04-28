@@ -92,7 +92,10 @@ def phillyMenu():
     current_time = datetime.now()
     date = ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))
     response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"location": "philly", "date": "'+date+'"}'})
-    records = json_util.loads(response.text)
+    if response.status_code == 400:
+        records = []
+    else:
+        records = json_util.loads(response.text)
     return render_template('phillyMenu.html', records=records)
 
 @app.route('/hocomenu', methods=["GET"])
@@ -100,7 +103,10 @@ def hocoMenu():
     current_time = datetime.now()
     date = ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))
     response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"location": "hoco", "date": "'+date+'"}'})
-    records = json_util.loads(response.text)
+    if response.status_code == 400:
+        records = []
+    else:
+        records = json_util.loads(response.text)
     return render_template('hocoMenu.html', records=records)
 
 @app.route('/contact', methods=["GET"])
@@ -160,9 +166,11 @@ def date():
         selected_date = request.form.get("date")
         parsed_date = datetime.strptime(selected_date, "%Y-%m-%d")
         formatted_date = f"{parsed_date.month}-{parsed_date.day}-{parsed_date.year}"  # Updated line
-        print(formatted_date)
         response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"date": "'+formatted_date+'"}'})
-        records = json_util.loads(response.text)
+        if response.status_code == 400:
+            records = []
+        else:
+            records = json_util.loads(response.text)
 
         sorted_records = {"philly": defaultdict(list), "hoco": defaultdict(list)}
 
