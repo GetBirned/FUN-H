@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, session, redirect, flash
+from flask import Flask, jsonify, request, session, redirect
 import requests
 import json
 # Hashing to encrypt password
@@ -68,8 +68,6 @@ class User:
         session.clear()
         x = requests.get("https://testfunctionappcs518.azurewebsites.net/api/deleterecord", params={'query': '{"_id": "'+str(query)+'"}'})
         if x.status_code == 200:
-            flash('Account deleted successfully!', 'success')
             return redirect('/')
         else:
-            flash('Failed to delete account!', 'error')
-            return redirect('/')
+            return redirect('/userplates')
