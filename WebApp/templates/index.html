@@ -37,6 +37,14 @@
       Monday: Friday: 7:15AM - 9PM
       Saturday - Sunday: 8AM - 9PM
     </p> 
-  
+    <script>
+      // Get the flash message from the server-side
+      const flashMessage = "{{ get_flashed_messages()[0] }}" || "";
+    
+      // If the flash message is not empty, show a pop-up with the message
+      if (flashMessage) {
+        alert(flashMessage);
+      }
+    </script>
   </body>
 </html>

@@ -106,8 +106,6 @@ def read(query, one=False):
     #########################
     # INSERT YOU CODE BELOW #
     #########################
-    print(query)
-    print(one)
     if query is None:
         c = mycol.find()
         return list(c)
@@ -141,10 +139,8 @@ def update(query, new_values):
     # INSERT YOU CODE BELOW #
     #########################
     try:
-        temp = query
-        temp = str(temp['_id'])
+        temp = str(query['_id'])
         x = mycol.update_many({"_id": ObjectId(temp)}, {'$set': new_values})
-        print("AAA", x)
         if x .modified_count > 0:
             return True
     except:

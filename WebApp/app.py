@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, request, redirect, send_file, session
+from flask import Flask, render_template, url_for, request, redirect, send_file, session, flash
 from functools import wraps
 import requests
+import uuid
 from datetime import datetime
 import json
 from collections import defaultdict
@@ -56,14 +57,6 @@ def serve_images():
 def serve_css():
     return send_file('./styles.css', mimetype='text/css')
 
-@app.route('/normalizecss')
-def serve_normalizecss():
-    return send_file('./normalize.css', mimetype='text/css')
-
-@app.route('/accountcss')
-def serve_accountcss():
-    return send_file('./AccountStyles.css', mimetype='text/css')
-
 @app.route('/jquery')
 def serve_jquery():
     return send_file('./js/jquery.js', mimetype='text/js')
@@ -113,7 +106,7 @@ def hocoMenu():
 def contact():
     return render_template('contact.html')
    
-
+# Temp create route
 @app.route('/create', methods=["GET", "POST"])
 def create():
     if request.method == "POST":
@@ -129,6 +122,68 @@ def create():
     elif request.method == "GET":
         return render_template('create.html')
 
+@app.route('/createplate', methods=["POST"])
+@login_required
+def createplate():
+    if request.method =="POST":
+        if request.form.get('selected_items[]') == None:
+            flash("No items were selected.")
+            return redirect(url_for("date"))
+        response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"_id": "'+str(session['user']['_id'])+'"}'})
+        record = json.loads(response.text)
+        new_plate = {
+            "_id": uuid.uuid4().hex,
+            "plate_name": request.form.get('name'),
+            "user": session['user']["_id"],
+            "items": request.form.getlist('selected_items[]')
+        }
+        record[0]['plates'].append(new_plate)
+        doc = json.dumps({"plates": record[0]['plates']})
+        requests.post('https://testfunctionappcs518.azurewebsites.net/api/updaterecord', params={"query": '{"_id": "'+str(session['user']["_id"])+'"}', "new_value": doc})
+        session['user'] = record[0]
+        return redirect('/userplates')
+    return redirect(url_for("index"))
+
+@app.route('/deleteplate')
+@login_required
+def deleteplate():
+    plate_name = request.args.get('plate_name')
+    response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"_id": "'+str(session['user']['_id'])+'"}'})
+    record = json.loads(response.text)
+    for plate in record[0]['plates']:
+        if plate['plate_name'] == plate_name:
+            record[0]['plates'].remove(plate)
+            doc = json.dumps({"plates": record[0]['plates']})
+            requests.post('https://testfunctionappcs518.azurewebsites.net/api/updaterecord', params={"query": '{"_id": "'+str(session['user']["_id"])+'"}', "new_value": doc})
+            break
+    session['user'] = record[0]
+    return redirect('/userplates')
+
+@app.route('/editplate', methods=['GET', 'POST'])
+def edit_plate():
+    if request.method == 'POST':
+        items = request.form.getlist('items')
+        response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"_id": "'+str(session['user']['_id'])+'"}'})
+        record = json.loads(response.text)
+        plate = record[0]['plates']
+        record[0]['plates'][0]['items'] = items
+        print(record[0]['plates'])
+        doc = json.dumps({"plates": record[0]['plates']})
+        requests.post('https://testfunctionappcs518.azurewebsites.net/api/updaterecord', params={"query": '{"_id": "'+str(session['user']["_id"])+'"}', "new_value": doc})
+        session['user'] = record[0]
+        return redirect('/userplates')
+
+    # Retrieve the plate from the user's session
+    plate_name = request.args.get('plate_name')
+    response = requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"_id": "'+str(session['user']['_id'])+'"}'})
+    record = json.loads(response.text)
+    for plate in record[0]['plates']:
+        if plate['plate_name'] == plate_name:
+            return render_template('editPlate.html', plate=plate)
+    # Render the edit plate form
+    return render_template('/userplates')
+
+# Temp edit route
 @app.route('/edit', methods=["GET", "POST"])
 def edit():
     if request.method == "POST":
@@ -145,6 +200,8 @@ def edit():
         record = json_util.loads(response.text)
         return render_template('edit.html', record=record)
 
+# Somewhat temporary
+# Used to collect all entries in collection as well as delete them
 @app.route('/records', methods=["GET", "POST"])
 def records():
     if request.method == "POST":

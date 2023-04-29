@@ -22,13 +22,12 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         try:
             req_body = req.params.get('query')
             req_body = json.loads(req_body)
-            logging.info(req_body)
+            # logging.info(req_body)
             if req.params.get('one') == "True":
-                logging.info("NOOO")
                 res = data_manager.read(req_body, True)
             else:
                 res = data_manager.read(req_body, False)
-            logging.info(res)
+            # logging.info(res)
             if res:
                 res = json_util.dumps(res)
                 # logging.info(res)

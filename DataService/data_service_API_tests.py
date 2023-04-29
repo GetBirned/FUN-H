@@ -132,7 +132,7 @@ from bson import ObjectId
 
 url = 'http://localhost:7071/api/ReadRecords'
 email = "test2@email.com"
-x = requests.get(url, params={"query":'{}', "one": True})
+x = requests.get(url, params={"query":'{}', "one": False})
 print("response text", x.text)
 print("response code", x.status_code)
 

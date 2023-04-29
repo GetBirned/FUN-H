@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Edit Record</title>
+    <link rel="icon" href="/image" type="image/x-icon">
+    <link rel="stylesheet" href="/css">
+    <style>
+        /* form {
+          background-color: #fff;
+          box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+          margin-top: 1em;
+          padding: 1em;
+          margin-left: 1em;
+          margin-right: 1em;
+        }
+        input[type="text"], input[type="number"] {
+          width: 100%;
+          padding: 0.5em;
+          margin: 0.5em 0;
+          border: none;
+          border-radius: 3px;
+          box-shadow: 0 0 3px rgba(0,0,0,0.1);
+        }
+        input[type="submit"] {
+          background-color: #003591;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          padding: 0.5em;
+          margin-top: 1em;
+          cursor: pointer;
+        }
+        input[type="submit"]:hover {
+          background-color: #001D52;
+        } */
+        form {
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            margin: 2em auto;
+            max-width: 1000px;
+            padding: 2em;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin: 1em 0;
+        }
+        th, td {
+            text-align: left;
+            padding: 0.5em;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 1px;
+            background-color: #003591;
+            color: #fff;
+            font-weight: bold;
+            border-bottom: none;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75em;
+            margin-bottom: 0.5em;
+            border: none;
+            border-radius: 3px;
+            box-shadow: 0 0 3px rgba(0,0,0,0.1);
+        }
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 3px rgba(0,0,0,0.2);
+        }
+
+        button[type="submit"] {
+            background-color: #003591;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 0.5em;
+            margin-top: 1em;
+            cursor: pointer;
+            margin: none;
+            display: inline-block;
+        }
+        button[type="submit"]:hover {
+            background-color: #001D52;
+        }
+      </style>
+  </head>
+  <body>
+    {% block navbar %}
+    {% include 'navbar.html' %}
+    {% endblock %}
+    {% block content %}
+    <h1>Edit Plate: {{ plate['plate_name'] }}</h1>
+    <form method="post">
+    <table>
+        <thead>
+        <tr>
+            <th>Item</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in plate['items'] %}
+        <tr>
+            <td><input type="text" name="items" value="{{ item }}"></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Save Changes</button>
+    </form>
+    {% endblock %}
+  </body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, session, redirect
+from flask import Flask, jsonify, request, session, redirect, flash
 import requests
 import json
 # Hashing to encrypt password
@@ -20,14 +20,13 @@ class User:
             "_id": uuid.uuid4().hex,
             "name": request.form.get('name'),
             "email": request.form.get('email'),
-            "password": request.form.get('password')
+            "password": request.form.get('password'),
+            "plates": []
         }
-        print(type(user))
         
         # Encrypt password
         user['password'] = pbkdf2_sha256.encrypt(user['password'])
         # Check if email already exists
-        print(requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"email": "'+user['email']+'"}'}))
         if requests.get("https://testfunctionappcs518.azurewebsites.net/api/readrecords", params={"query":'{"email": "'+user['email']+'"}'}):
             return jsonify({"error":"Email address already in use"}), 400
         # Attempt to create account
@@ -53,7 +52,8 @@ class User:
             "_id": json.loads(user.text)[0]["_id"],
             "name": json.loads(user.text)[0]["name"],
             "email": json.loads(user.text)[0]["email"],
-            "password": json.loads(user.text)[0]["password"]
+            "password": json.loads(user.text)[0]["password"],
+            "plates": json.loads(user.text)[0]["plates"]
             }
             return self.start_session(user2)
         
@@ -64,10 +64,11 @@ class User:
         # Get user details through session
         user = session['user']
         query = user["_id"]
-        print(query)
-        session.clear()
         x = requests.get("https://testfunctionappcs518.azurewebsites.net/api/deleterecord", params={'query': '{"_id": "'+str(query)+'"}'})
         if x.status_code == 200:
+            session.clear()
+            flash('Account deleted successfully')
             return redirect('/')
         else:
+            flash('Failed to delete account')
             return redirect('/userplates')
