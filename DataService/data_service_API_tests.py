@@ -5,6 +5,7 @@
 import requests
 import json
 from bson import ObjectId
+from datetime import datetime
 
 # url = 'https://testfunctionappcs518.azurewebsites.net/api/createrecord'
 # document = {'title': 'test'}     # or whatever your data fields are
@@ -126,13 +127,15 @@ from bson import ObjectId
 
 # url = 'https://testfunctionappcs518.azurewebsites.net/api/deleterecord'
 # query = ObjectId('6442b5c669c41958d9d5f438')
-# x = requests.get(url, params={'query': '{"_id": "'+str(query)+'"}'})
+# current_time = datetime.now()
+# date = ("%s-%s-%s" % (current_time.month, current_time.day, current_time.year))
+# x = requests.get(url, params={'query': '{"location": "hoco", "date": "'+date+'"}'})
 # print("response text", x.text)
 # print("response code", x.status_code)
 
-url = 'http://localhost:7071/api/ReadRecords'
-email = "test2@email.com"
-x = requests.get(url, params={"query":'{}', "one": False})
-print("response text", x.text)
-print("response code", x.status_code)
+# url = 'http://localhost:7071/api/ReadRecords'
+# email = "test2@email.com"
+# x = requests.get(url, params={"query":'{}', "one": False})
+# print("response text", x.text)
+# print("response code", x.status_code)
 
