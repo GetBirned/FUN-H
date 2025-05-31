@@ -10,7 +10,7 @@
 - Frontend: HTML, CSS, JavaScript (jQuery)
 - Backend: Flask (Python)
 - Templating: Jinja2
-- Database: SQLite (presumed; adaptable)
+- Database: MongoDB
 - Version Control: Git / GitLab
 
 ---
